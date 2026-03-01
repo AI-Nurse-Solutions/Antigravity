@@ -1,0 +1,183 @@
+schema_version: "1.0"
+registry_name: "NIN / NAIO / Florence-X System Registry"
+owner: "NAIO Governance Authority"
+last_updated: "2026-02-28"
+
+global_principles:
+  - governance_precedes_automation
+  - no_phi_default
+  - human_authority_primary
+  - vendor_replaceability_required
+  - cost_is_governance_signal
+  - auditability_mandatory
+
+data_zones:
+  green:
+    description: "Public, non-sensitive information"
+    allowed_models: ["cloud", "local"]
+    autonomy_level: "auto_allowed"
+  yellow:
+    description: "Internal, sensitive but non-regulated"
+    allowed_models: ["local_preferred", "cloud_with_approval"]
+    autonomy_level: "review_required"
+  red:
+    description: "Regulated, PHI, contractual, high-risk"
+    allowed_models: ["local_only"]
+    autonomy_level: "explicit_human_approval"
+
+entities:
+
+  NIN:
+    type: "community_platform"
+    authority_level: "cultural"
+    purpose: "Nurse AI literacy, empowerment, network formation"
+    allowed_data_zones: ["green"]
+    prohibited_actions:
+      - clinical_decision_support
+      - certification_issuance
+      - agent_runtime_execution
+    feeds_into:
+      - NAIO
+      - NAIO_Fellowship
+      - NINE_Inc
+
+  NAIO:
+    type: "governance_authority"
+    authority_level: "constitutional"
+    purpose: "Define standards, risk tiers, control objectives"
+    controls:
+      - agent_registration
+      - risk_tiering
+      - audit_requirements
+      - token_governance
+      - escalation_protocols
+    required_artifacts:
+      - control_objective_matrix
+      - agent_registry
+      - risk_cards
+      - audit_logs
+    escalation_board: "NAIO_Oversight_Council"
+
+  Florence_X:
+    type: "orchestration_runtime"
+    authority_level: "technical"
+    purpose: "Execute governed multi-agent workflows"
+    components:
+      dispatcher:
+        enforces:
+          - data_zone_classification
+          - model_routing
+          - token_caps
+          - autonomy_thresholds
+      instrument_registry:
+        requires:
+          - model_name
+          - version
+          - risk_tier
+          - steward_name
+      logging:
+        immutable: true
+        retention_policy_days: 365
+    allowed_data_zones: ["green", "yellow"]
+    red_zone_execution: "local_only_with_manual_gate"
+
+  EDENA:
+    type: "ethical_engine"
+    authority_level: "moral"
+    purpose: "Risk classification, ethical review, decision trace"
+    required_for:
+      - yellow_zone_workflows
+      - red_zone_workflows
+    artifacts:
+      - risk_card
+      - decision_trace
+      - escalation_record
+    autonomy_override: true
+
+  NINE_Inc:
+    type: "incubator"
+    authority_level: "developmental"
+    purpose: "Time-bound AI orchestration execution lab"
+    cohort_requirements:
+      governance_anchor_required: true
+      max_participants: 9
+      min_duration_months: 6
+      max_duration_months: 24
+    infrastructure_policy:
+      edge_nodes:
+        allowed_zone: "green"
+        phi_allowed: false
+      core_cluster:
+        allowed_zone: "yellow"
+      cloud_augmentation:
+        allowed_zone: "green"
+    required_deliverables:
+      - architecture_map
+      - operational_agent
+      - governance_audit_package
+      - launch_or_sunset_plan
+
+  NAIO_Fellowship:
+    type: "credentialing_program"
+    authority_level: "human_capability"
+    purpose: "Train Nurse AI Orchestrators"
+    levels:
+      - level_1: "AI_Literate_Operator"
+      - level_2: "Workflow_Builder"
+      - level_3: "Orchestrator"
+      - level_4: "Governance_Steward"
+      - level_5: "Wisdom_Carrier"
+    competencies_required:
+      - risk_tier_classification
+      - token_governance
+      - audit_review
+      - escalation_logic
+      - model_replaceability
+
+agent_registration_template:
+  required_fields:
+    - agent_id
+    - purpose
+    - data_zone
+    - risk_tier
+    - steward_name
+    - model_provider
+    - autonomy_level
+    - token_budget_monthly
+    - logging_enabled
+  autonomy_levels:
+    auto_allowed: "Green zone low-risk only"
+    review_required: "Human review before external action"
+    explicit_human_approval: "Manual approval before execution"
+
+model_routing_policy:
+  priority:
+    - local_model_for_yellow_or_red
+    - cloud_model_for_green_only
+  downgrade_threshold_percent: 75
+  shutdown_threshold_percent: 100
+  fallback_logic:
+    - if_cloud_unavailable: "route_to_local"
+    - if_local_insufficient: "escalate_to_steward"
+
+swarm_governance:
+  enabled: true
+  required_roles:
+    - conductor
+    - guard_agent
+    - specialist_agents
+    - validation_agent
+  conflict_detection: true
+  divergence_escalation_required: true
+
+audit_policy:
+  log_all_actions: true
+  store_prompt_versions: true
+  store_model_versions: true
+  store_cost_metrics: true
+  quarterly_review_required: true
+
+review_cycle:
+  monthly_governance_review: true
+  quarterly_board_review: true
+  annual_architecture_audit: true
